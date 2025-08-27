@@ -1,0 +1,66 @@
+#pharma-bubble{
+  position:fixed;right:20px;
+  bottom:20px;
+  width:64px;
+  height:64px;
+  border-radius:50%; 
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  background:#0f766e;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center; 
+  cursor:pointer;
+  font-weight:700;
+  font-family:system-ui} 
+
+#pharma-panel{
+  position:fixed;
+  right:20px;
+  bottom:96px;
+  width:360px;
+  max-height:70vh;
+  display:none;
+  background:#0f1a20;
+  color:#eaf2f7; 
+  border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+  overflow:hidden} 
+
+#pharma-header{
+  padding:12px 14px;
+  background:#123242;
+  display:flex;
+  align-items:center;
+  justify-content:space-between} 
+
+#pharma-messages{
+  padding:12px;
+  overflow:auto;
+  max-height: calc(250px);} .msg{margin:8px 0;
+   line-height:1.3} .user{text-align:right} .user .bubble{display:inline-block;
+   background:#195d7a;
+  padding:8px 10px;
+  border-radius:12px 12px 2px 12px} .bot .bubble{display:inline-block;
+  background:#1f2e36;
+  padding:8px 10px;
+  border-radius:12px 12px 12px 2px} 
+
+#pharma-input{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:#0f1a20;
+  border-top:1px solid #163342;
+  position: sticky;   /* <-- pin it */
+  bottom: 0; 
+} 
+
+#pharma-input input{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #254b61;
+  background:#0b1520;
+  color:#eaf2f7} .iconbtn{
+    width:40px;height:40px;border-radius:12px;border:none;background:#195d7a;color:#fff;cursor:pointer} a.plot-link{color:#7bdcff;text-decoration:underline}

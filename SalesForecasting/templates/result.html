@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sales Forecast Results for {{ product_name }}</title>
+
+    <!-- IMPORTANT: correct filename/case -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='resultStyle.css') }}">
+</head>
+<body>
+    <div class="page">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <a href="/" class="back-link">
+            <span class="icon">&#8592;</span>
+            Back to Forecast
+        </a>
+
+        <div class="title-wrap">
+            <h1>Sales Forecast Results for {{ product_name }}</h1>
+            <p class="subtitle">12-month demand projection analysis</p>
+        </div>
+
+        <div class="actions">
+            <!-- Trend pill is computed by JS from forecast_sales -->
+            <span id="trend-pill"
+                class="pill {% if 'Rising' in trend_text %}pill-up{% elif 'Falling' %}pill-down{% else %}pill-neutral{% endif %}">
+                Trend: {{ trend_text }}
+            </span>
+
+
+
+
+        <!-- PDF & CSV actions (POST with hidden inputs) -->
+        <form method="POST" action="{{ url_for('download_pdf') }}" class="inline-form">
+          <input type="hidden" name="from_date" value="{{ request.form['from_date'] }}">
+          <input type="hidden" name="to_date" value="{{ request.form['to_date'] }}">
+          <input type="hidden" name="product" value="{{ request.form['product'] }}">
+          <button type="submit" class="btn ghost">PDF</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('download_csv') }}" class="inline-form">
+          <input type="hidden" name="from_date" value="{{ request.form['from_date'] }}">
+          <input type="hidden" name="to_date" value="{{ request.form['to_date'] }}">
+          <input type="hidden" name="product" value="{{ request.form['product'] }}">
+          <button type="submit" class="btn ghost">CSV</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon"></div>
+        <div>
+          <div class="kpi-label">Average Forecast</div>
+          <div class="kpi-value" id="kpi-avg">—</div>
+          <div class="kpi-delta" id="kpi-avg-delta"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon"></div>
+        <div>
+          <div class="kpi-label">Peak Sales Month</div>
+          <div class="kpi-value" id="kpi-peak">—</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon"></div>
+        <div>
+          <div class="kpi-label">Lowest Sales Month</div>
+          <div class="kpi-value" id="kpi-low">—</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon">🩺</div>
+        <div>
+          <div class="kpi-label">Confidence Range</div>
+          <div class="kpi-value" id="kpi-conf">—</div>
+          <div class="kpi-delta" id="kpi-conf-note">Stable</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main 2-column area -->
+    <section class="grid-2">
+      <!-- Left: Chart/Table card -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="title-icon"></span>
+            Sales Plot
+          </div>
+          <div class="segmented">
+            <button id="btn-chart" class="seg active">Chart</button>
+            <!--button id="btn-table" class="seg">Table</button-->
+          </div>
+        </div>
+        <p class="card-subtitle">Forecasted Sales with Confidence Intervals (Line and Area Chart)</p>
+
+        <!-- Chart container -->
+        <div id="chart-wrap">
+          {{ sales_plot|safe }}
+        </div>
+
+        <!-- Table container (hidden by default) -->
+        <div id="table-wrap" class="hidden">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Forecasted Sales</th>
+                  <th>Lower Bound</th>
+                  <th>Upper Bound</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in forecast_sales %}
+                <tr>
+                  <td>{{ row['Serial Number'] }}</td>
+                  <td>{{ row['Date'].strftime('%Y-%m-%d') }}</td>
+                  <td>{{ row['Forecasted Sales'] }}</td>
+                  <td>{{ row['Lower Bound'] }}</td>
+                  <td>{{ row['Upper Bound'] }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Forecasted Sales list -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="title-icon">🗓</span>
+            Forecasted Sales
+          </div>
+        </div>
+
+        <ol class="forecast-list">
+  {% for row in forecast_sales %}
+  <li class="forecast-item {{ row['Highlight'] }}">
+    <div class="num">{{ loop.index }}</div>
+    <div class="meta">
+      <div class="date">{{ row['Date'].strftime('%Y-%m-%d') }}</div>
+      <div class="month">{{ row['Date'].strftime('%b %Y') }}</div>
+    </div>
+    <div class="value">
+      {{ '%.2f'|format(row['Forecasted Sales']) }}
+      <div class="range">
+        {{ '%.2f'|format(row['Lower Bound']) }} – {{ '%.2f'|format(row['Upper Bound']) }}
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+
+      </div>
+    </section>
+
+    <!-- Summary & Explanation -->
+    <section class="grid-2">
+      <div class="card tint-blue">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="title-icon">⚡</span>
+            Explanation
+          </div>
+        </div>
+        <div class="text-block">
+          {{ explanation }}
+        </div>
+      </div>
+
+      <div class="card tint-green">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="title-icon">💡</span>
+            Sumary
+          </div>
+        </div>
+        <div class="text-block">
+          {{ summary }}
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendations -->
+    <section class="card tint-rose">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="title-icon">🎯</span>
+          Recommendations
+        </div>
+      </div>
+      <div class="text-block">
+        {{ recommendations }}
+      </div>
+    </section>
+  </div>
+
+  <!-- Data for metrics -->
+  <script>
+    const data = JSON.parse('{{ forecast_sales | tojson | safe }}');
+    function fmt(num) {
+      if (num === null || num === undefined || isNaN(num)) return "—";
+      return Number(num).toFixed(2);
+    }
+    function monthLabel(d) {
+      try {
+        const dt = new Date(d);
+        return dt.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+      } catch { return d; }
+    }
+
+    if (Array.isArray(data) && data.length > 0) {
+      // Average
+      const vals = data.map(r => Number(r['Forecasted Sales']));
+      const avg = vals.reduce((a,b)=>a+b,0) / vals.length;
+
+      // Peak & Low
+      let maxIdx = 0, minIdx = 0;
+      for (let i=1;i<vals.length;i++){
+        if (vals[i] > vals[maxIdx]) maxIdx = i;
+        if (vals[i] < vals[minIdx]) minIdx = i;
+      }
+
+      // Confidence: average half-range as % of value
+      const pct = data.map(r => {
+        const lo = Number(r['Lower Bound']);
+        const hi = Number(r['Upper Bound']);
+        const v  = Number(r['Forecasted Sales']);
+        const half = Math.max(0,(hi - lo)/2);
+        return v ? (half / v) : 0;
+      });
+      const confPct = (pct.reduce((a,b)=>a+b,0) / pct.length) * 100;
+
+      // Trend: compare last vs first
+      const first = vals[0], last = vals[vals.length - 1];
+      const change = first ? ((last - first) / first) * 100 : 0;
+
+      // Fill KPIs
+      document.getElementById('kpi-avg').textContent = fmt(avg);
+      const avgDelta = change >= 0 ? `+${fmt(change)}` : fmt(change);
+      document.getElementById('kpi-avg-delta').textContent = avgDelta + '%';
+
+      const peakRow = data[maxIdx];
+      const lowRow  = data[minIdx];
+      document.getElementById('kpi-peak').textContent =
+        `${monthLabel(peakRow['Date'])}  ${fmt(peakRow['Forecasted Sales'])}`;
+      document.getElementById('kpi-low').textContent  =
+        `${monthLabel(lowRow['Date'])}  ${fmt(lowRow['Forecasted Sales'])}`;
+      document.getElementById('kpi-conf').textContent = '±' + Math.round(confPct) + '%';
+
+      // Trend pill
+      //const pill = document.getElementById('trend-pill');
+      //pill.textContent = 'Trend: ' + (change > 1 ? 'Rising' : (change < -1 ? 'Falling' : 'Stable'));
+      //pill.classList.remove('pill-neutral','pill-up','pill-down');
+      //if (change > 1) pill.classList.add('pill-up');
+      //else if (change < -1) pill.classList.add('pill-down');
+      //else pill.classList.add('pill-neutral');
+    }
+
+    // Chart/Table toggle
+    const btnChart = document.getElementById('btn-chart');
+    //const btnTable = document.getElementById('btn-table');
+    const chartWrap = document.getElementById('chart-wrap');
+    //const tableWrap = document.getElementById('table-wrap');
+
+    function setMode(mode){
+      if (mode === 'chart'){
+        chartWrap.classList.remove('hidden');
+        tableWrap.classList.add('hidden');
+        btnChart.classList.add('active');
+        btnTable.classList.remove('active');
+      } else {
+        chartWrap.classList.add('hidden');
+        tableWrap.classList.remove('hidden');
+        btnTable.classList.add('active');
+        btnChart.classList.remove('active');
+      }
+    }
+    btnChart.addEventListener('click', ()=> setMode('chart'));
+    btnTable.addEventListener('click', ()=> setMode('table'));
+  </script>
+</body>
+</html>

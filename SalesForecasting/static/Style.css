@@ -1,0 +1,199 @@
+/* 🌍 Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 10px;  /* ⬇ reduced padding */
+    color: #333;
+    background: url('/static/images/drug_bg.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 🏷️ Title */
+h1 {
+    color: #0d4e4f;
+    text-align: center;
+    margin-bottom: 20px; /* ⬇ smaller gap */
+    font-size: 2.2em;   /* ⬇ smaller */
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 📦 Glassmorphic Form container */
+form {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 25px;   /* ⬇ tighter */
+    max-width: 900px;  /* ⬇ narrower */
+    margin: 0 auto 20px auto;
+    box-shadow: 0 8px 30px rgba(17, 109, 110, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 35px rgba(17, 109, 110, 0.4);
+}
+
+/* 📌 Section Heading */
+h2 {
+    color: #116D6E;
+    text-align: center;
+    margin: 12px 0 18px 0;
+    font-size: 2em;   /* ⬇ smaller */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* 🏷️ Labels */
+label {
+    font-weight: 600;
+    color: #116D6E;
+    margin-bottom: 4px;
+    display: block;
+    font-size: 1.1em;  /* ⬇ smaller */
+}
+
+/* 📅 Date Row */
+.date-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;   /* ⬇ less spacing */
+    margin: 18px auto;
+}
+
+.date-row > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 📅 Date Inputs */
+input[type="date"] {
+    width: 160px;  /* ⬇ narrower */
+    padding: 8px 12px; 
+    border: 2px solid #116D6E;
+    border-radius: 8px;
+    font-size: 1.1em; /* ⬇ smaller */
+    background: rgba(255, 255, 255, 0.6);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #0d4e4f;
+    background-color: rgba(255, 255, 255, 0.9);
+    outline: none;
+}
+
+/* ✅ Submit Button */
+button {
+    background-color: #116D6E;
+    color: white;
+    padding: 10px 24px;   /* ⬇ smaller */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;   /* ⬇ smaller */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+button:hover {
+    background-color: #14898A;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(17, 109, 110, 0.35);
+}
+
+/* 🗂️ Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;  /* ⬇ smaller gap */
+    margin: 18px auto;
+    justify-items: center;
+}
+
+/* 📦 Product Cards */
+.product-card {
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid #116D6E;
+    border-radius: 12px;
+    padding: 15px;  /* ⬇ less padding */
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100px;  /* ⬇ shorter */
+    width: 160px;  /* ⬇ narrower */
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-size: 1em;  /* ⬇ normal text */
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 22px rgba(17, 109, 110, 0.3);
+    border-color: #14898A;
+}
+
+/* Selected Card */
+.product-card.selected {
+    background-color: #116D6E;
+    color: white;
+    border-color: #0d4e4f;
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+
+.product-card.selected .code {
+    color: #fff;
+}
+
+.product-card.selected .desc {
+    color: #D6F5B3;
+}
+
+/* Card Text */
+.product-card .code {
+    font-size: 1.1em;  /* ⬇ smaller */
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #116D6E;
+}
+
+.product-card .desc {
+    font-size: 0.9em;  /* ⬇ smaller */
+    color: #333;
+}
+
+/* 📱 Responsive Layouts */
+@media screen and (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .date-row {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  input[type="date"] {
+    width: 100%;
+  }
+}

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capsylon - Sales Forecast</title>
+
+    <script src="https://kit.fontawesome.com/c1df782baf.js"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='widget.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='mainstyle.css') }}">
+    
+
+
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            display: inline-block;
+            width: 170px;
+            /* Adjust video width here */
+            height: 150px;
+            /* Adjust video height here */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 2px 5px;
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        video {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="logo">
+    </div>
+    <nav class="navbar">
+        <a href="#Home"><i class="fas fa-home"></i> Home</a>
+        <a href="#About"><i class="fas fa-user"></i> About</a>
+        <a href="#Service"><i class="fas fa-cogs"></i> Service</a>
+        <a href="#Contact"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="#"><i class="fas fa-user-circle"></i> Hi, {{ name }}</a>
+        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> </a>
+
+
+        <!-- Future options -->
+        <!-- <a href="#Gallery"><i class="fas fa-image"></i> Gallery</a> -->
+        <!-- <a href="#Contact"><i class="fas fa-envelope"></i> Contact</a> -->
+    </nav>
+    <!-- <div class="right-icons">
+        <div id="menu-bars" class="fas fa-bars"></div>
+        <div class="btn">Login</div>
+    </div> -->
+</header>
+
+
+    <!-- header section ended -->
+
+
+    <!-- Home section started -->
+    <div class="main-home" id="Home">
+        <div class="home">
+            <div class="home-left-content">
+                <!-- Main Heading -->
+                <h2>
+                    Welcome To Sales <span class="highlight"><br>Forecasting</span>
+                </h2>
+                <br>
+                <!-- Subtitle -->
+                <h3>Turning Market Noise Into Actionable Insights.</h3>
+
+                <!-- Small description -->
+                <p class="lorem">
+                    Forecasting Isn't About The Future, It's About Making Today's Choices Smarter.
+                </p>
+                <br>
+                <!-- Buttons -->
+                <div class="home-btn">
+                    <a href="{{ url_for('input_page') }}" class="btn-primary">
+                        <i class="fas fa-chart-line"></i> Start Forecast
+                    </a>
+                    <a class="btn-secondary"
+                        href="https://app.powerbi.com/view?r=eyJrIjoiN2NiYTczNWMtNWZjNy00OTQzLTkzNTUtMjQyOGVmNzdkMDU3IiwidCI6IjRmNzI3ZmMwLWJkOTItNDdiZC05ZjE0LTA3OGE2OGIzM2Q3MSIsImMiOjN9">
+                        <i class="fas fa-chart-bar"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- About Us Section Starts -->
+<section class="main-about" id="About">
+    <div class="about-inner-content-left">
+        <h4>ABOUT US</h4>
+        <h2>Transforming Uncertainty <br>Into Strategic Clarity</h2>
+        <p>
+            Our focus lies in leveraging advanced analytics and forecasting techniques to help businesses anticipate trends, optimize decisions, and drive growth.
+        </p>
+        <p>
+            By transforming complex sales into clear insights, we help organizations identify trends, predict demand, and optimize strategies.
+            We deliver detailed forecasting reports, actionable recommendations, and clear executive summaries to support
+            your strategic decisions and enhance operational efficiency.
+        </p>
+
+        <h4>OUR MISSION</h4>
+        <p>
+            Our mission is to support smarter decision-making in pharma sales, marketing, and resource planning.
+            We strive to bridge the gap between data and decision-making.
+        </p>
+    </div>
+
+    <div class="about-inner-content-right">
+        <!-- Stats Cards -->
+        <div class="about-stats-cards">
+            <div class="stat-card">
+                <h3>8</h3>
+                <p>ATC Categories</p>
+            </div>
+            
+        </div>
+
+        <!-- Features Cards -->
+        <div class="about-feature-cards">
+            <div class="feature-card">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                <h4>Data-Driven Decisions</h4>
+                <p>Actionable recommendations powered by advanced analytics</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                <h4>Precision Forecasting</h4>
+                <p>12-month accurate predictions with 95% confidence intervals</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                <h4>Trend Detection</h4>
+                <p>Instantly identify whether demand is rising, falling, or stable with automated trend analysis.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-chart-bar" aria-hidden="true"></i>
+                <h4>Custom Reports</h4>
+                <p>Export professional, ready-to-share PDF reports that summarize forecasts & trends and CSV files.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Us Section Ends -->
+
+
+    <!-- Our services section starts -->
+    
+    <div class="our-service" id="Service">
+        <div class="service-heading">
+            <h2>ATC Drug Categories</h2>
+        </div>
+
+        <div class="main-services">
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-pills"></i></div>
+                <h3>M01AB</h3>
+                <p>An NSAID used to treat pain and inflammation, often in arthritis.</p>
+                <span class="tag">Acetic acid NSAIDs</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-virus"></i></div>
+                <h3>M01AE</h3>
+                <p>An NSAID used for pain, fever, and inflammation treatment.</p>
+                <span class="tag">Propionic acid derivatives</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-regular fa-heart"></i></div>
+                <h3>N02BA</h3>
+                <p>An NSAID used to reduce pain,fever, and to prevent blood clots.</p>
+                <span class="tag">Salicylic acid derivatives</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-capsules"></i></div>
+                <h3>N02BE</h3>
+                <p>Relieves mild to moderate pain and reduces fever, commonly used for headaches.</p>
+                <span class="tag">Anilides and Acetaminophen</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
+                <h3>N05B</h3>
+                <p>Used to treat anxiety, insomnia, and seizures by calming the central nervous system.</p>
+                <span class="tag">Psycholeptics and Anxiolytics</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-moon"></i></div>
+                <h3>N05C</h3>
+                <p>A sedative-hypnotic used to treat insomnia by helping people fall asleep faster.</p>
+                <span class="tag">Hypnotics and sedatives</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-syringe"></i></div>
+                <h3>R03</h3>
+                <p>A hormone therapy for managing blood sugar levels in diabetes.</p>
+                <span class="tag">adrenergic inhalants and Related agents</span>
+            </div>
+
+            <div class="inner-services">
+                <div class="service-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                <h3>R06</h3>
+                <p>An antihistamine used to relieve allergy symptoms such as runny nose, itching, and hives.</p>
+                <span class="tag">Antihistamine</span>
+            </div>
+        </div>
+    </div>
+
+        <!-- Our services section ends -->
+
+
+           <!-- Contact Section Starts -->
+            <section class="contact-section" id="Contact">
+            <div class="contact-container">
+                
+                <!-- Left Section -->
+                <div class="contact-left">
+                <div class="contact-logo">
+                
+                    <h2>CAPSYLON</h2>
+                </div>
+                <p>
+                    Let’s connect! Reach out to us for collaborations, inquiries, or support.
+                    Together, we can transform uncertainty into strategic clarity and drive better outcomes.
+                </p>
+                <div class="contact-socials">
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+                <a href="#top" class="back-to-top">↑ Back to Top</a>
+                </div>
+
+                <!-- Right Section -->
+                <div class="contact-right">
+                <div class="contact-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                    <li><i class="fas fa-envelope"></i> info@capsylon.ai</li>
+                    <li><i class="fas fa-phone"></i> +1 (234) 567-890</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Chennai, INDIA</li>
+                    </ul>
+                </div>
+                <div class="contact-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                    <li><a href="#Home">Home</a></li>
+                    <li><a href="#About">About Us</a></li>
+                    <li><a href="#Service">Services</a></li>
+                    <li><a href="#Contact">Contact</a></li>
+                    </ul>
+                </div>
+                </div>
+
+            </div>
+            </section>
+            <div class="contact-bottom">
+                <p>We’d love to hear from you. Get in touch today!</p>
+            </div>
+
+    <script src="{{ url_for('static', filename='widget.js') }}"></script>
+    <script>
+    PharmaWidget.init({
+        apiBase: "http://localhost:5000",
+        agentName: "Capsy AI",
+        greeting: "Hi — I'm your Capsy AI. Ask about sales, forecasts, strategies."
+    });
+    </script>
+
+    <!-- Contact Section Ends -->
+
+
+
+
+
+    <!-- Footer section starts -->
+    <!-- Footer section ends -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('dashboardButton').addEventListener('click', function () {
+            var video = document.getElementById('dashboardVideo');
+            var closeButton = document.getElementById('closeButton');
+            video.style.display = 'block';
+            closeButton.style.display = 'block';
+            video.play();
+        });
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            var video = document.getElementById('dashboardVideo');
+            var closeButton = document.getElementById('closeButton');
+            video.pause();
+            video.style.display = 'none';
+            closeButton.style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>

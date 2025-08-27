@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Sales Forecasting</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-box">
+      <h2>Welcome Back</h2>
+      <p>Login to continue to Sales Forecasting</p>
+      <form action="/login" method="POST">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+      <p class="switch">Don’t have an account? <a href="/signup">Sign Up</a></p>
+    </div>
+  </div>
+</body>
+</html>

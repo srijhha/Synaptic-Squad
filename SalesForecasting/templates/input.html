@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Forecasting</title>
+  
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/static/Style.css">
+
+
+</head>
+
+<body>
+  <h1>Sales Forecasting</h1>
+
+  <form id="forecastForm" method="POST" action="{{ url_for('forecast') }}" onsubmit="return validateDates()">
+
+    <!-- Product Grid -->
+    <h2>Select a Drug Category</h2>
+    
+    <div class="product-grid">
+
+      <div class="product-card" data-value="M01AB">
+        <div class="code">M01AB</div>
+        <div class="desc">(Acetic Acid Derivatives)</div>
+      </div>
+
+      <div class="product-card" data-value="M01AE">
+        <div class="code">M01AE</div>
+        <div class="desc">(Propionic Acid Derivatives)</div>
+      </div>
+
+      <div class="product-card" data-value="N02BA">
+        <div class="code">N02BA</div>
+        <div class="desc">(Salicylic Acid Derivatives)</div>
+      </div>
+
+      <div class="product-card" data-value="N02BE">
+        <div class="code">N02BE</div>
+        <div class="desc">(Anilides - Pain Relief)</div>
+      </div>
+
+      <div class="product-card" data-value="N05B">
+        <div class="code">N05B</div>
+        <div class="desc">(Anxiolytics)</div>
+      </div>
+
+      <div class="product-card" data-value="N05C">
+        <div class="code">N05C</div>
+        <div class="desc">(Hypnotics & Sedatives)</div>
+      </div>
+
+      <div class="product-card" data-value="R03">
+        <div class="code">R03</div>
+        <div class="desc">(Asthma & COPD Drugs)</div>
+      </div>
+
+      <div class="product-card" data-value="R06">
+        <div class="code">R06</div>
+        <div class="desc">(Antihistamines)</div>
+      </div>
+
+    </div>
+
+    <!-- Hidden select for backend -->
+    <select id="product" name="product" required hidden>
+      <option value="">Select product</option>
+      <option value="N05C">N05C</option>
+      <option value="N02BE">N02BE</option>
+      <option value="R06">R06</option>
+      <option value="N02BA">N02BA</option>
+      <option value="M01AB">M01AB</option>
+      <option value="N05B">N05B</option>
+      <option value="M01AE">M01AE</option>
+      <option value="R03">R03</option>
+    </select>
+
+    <!-- Date Inputs in a Row -->
+    <div class="date-row">
+      <div>
+        <label for="from_date">From Date:</label>
+        <input type="date" id="from_date" name="from_date" required>
+      </div>
+      <div>
+        <label for="to_date">To Date:</label>
+        <input type="date" id="to_date" name="to_date" required>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-row">
+      <button type="submit" value="submit">Submit</button>
+    </div>
+  </form>
+
+  <script>
+    // Product card selection logic
+    const cards = document.querySelectorAll('.product-card');
+    const productSelect = document.getElementById('product');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        productSelect.value = card.dataset.value;
+      });
+    });
+
+    // Date validation
+    function validateDates() {
+      let fromDate = new Date(document.getElementById('from_date').value);
+      let toDate = new Date(document.getElementById('to_date').value);
+      if (fromDate >= toDate) {
+        alert("Please enter valid dates.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
