@@ -1,0 +1,17 @@
+joblib
+requests
+pdfkit
+reportlab
+kaleido
+Flask
+Flask-Cors
+python-dotenv
+openai>=1.30.0
+pandas
+numpy
+plotly
+statsmodels
+chromadb
+scikit-learn
+tqdm
+mysql-connector-python
